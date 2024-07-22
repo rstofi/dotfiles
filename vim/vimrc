@@ -21,13 +21,13 @@ highlight SpellLocal cterm=underline
 " Syntax and numbering
 syntax on " Syntax highlight
 set number " Line numbers
-set number relativenumber " Set relative line numbers
+" set number relativenumber " Set relative line numbers
 
 " Color scheme - Adjusted to a built-in scheme that might feel closer to GitHub/Sublime
-colorscheme gnl
+colorscheme sublimemonokai
 
 " Fonts gor the GUI
-set guifont=Monospace\ 10
+set guifont=Monospace\ 12
 
 
 " Cursor highlights
@@ -76,8 +76,8 @@ set expandtab       " expand tab to spaces so that tabs are spaces
 set history=200
 
 " Increment search
-set incsearch
-set wildmenu
+" set incsearch
+" set wildmenu
 
 " Set matching pairs of characters and highlight matching brackets
 set matchpairs+=<:>,「:」
@@ -86,10 +86,10 @@ set matchpairs+=<:>,「:」
 set ignorecase smartcase
 
 " Use mouse to select and resize windows, etc.
-if has('mouse')
-    set mouse=nic  " Enable mouse in several mode
-    set mousemodel=popup  " Set the behaviour of mouse
-endif
+" if has('mouse')
+"    set mouse=nic  " Enable mouse in several mode
+"    set mousemodel=popup  " Set the behaviour of mouse
+" endif
 
 " Fileformats to use for new files
 set fileformats=unix,dos
