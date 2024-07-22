@@ -13,4 +13,6 @@ mkdir -p ~/.vim/colors
 mv /pathr_to_your_downloaded/mycolorscheme.vim ~/.vim/colors/
 ```
 
-set the colorscheme via: `colorscheme mycolorscheme` in `.vimrc`
+set the colorscheme via: `colorscheme mycolorscheme` in `.vimrc`.
+
+Currently I use the [sublimemonokai](https://github.com/ErichDonGubler/vim-sublime-monokai) colorscheme.
