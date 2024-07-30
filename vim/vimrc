@@ -1,4 +1,4 @@
-" Basic settings
+" basic settings
 set encoding=utf-8
 scriptencoding utf-8
 set fileencoding=utf-8 " File encoding
@@ -60,35 +60,6 @@ set laststatus=2
 
 " }}}
 
-
-" PLUGINS ---------------------------------------------------------------- {{{
-" Plugin code goes here.
-
-" --- Usage
-" Install packages via: :PlugInstall (in vim)
-" Uninstall packages via: :PlugClean (in vim after removing the package from
-" this file)
-
-" Begin the plugin section
-call plug#begin('~/.vim/plugged')
-
-" --- Installed packages
-
-" --- Add the vim-gitgutter plugin
-Plug 'airblade/vim-gitgutter'
-
-" --- Add language server support
-" coc.nvim for LSP support
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Configure coc
-" Use <Tab> and <S-Tab> to navigate through popup menu
-"inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" End the plugin section
-call plug#end()
-
 " Tab behaviour
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
@@ -97,10 +68,6 @@ set expandtab       " expand tab to spaces so that tabs are spaces
 
 " History
 set history=200
-
-" Increment search
-" set incsearch
-" set wildmenu
 
 " Set matching pairs of characters and highlight matching brackets
 set matchpairs+=<:>,「:」
@@ -120,5 +87,56 @@ set fileformats=unix,dos
 
 " Minimum lines to keep above and below cursor when scrolling
 set scrolloff=3
+
+" Set wrap
+set wrap
+
+" Set maximum width for wrap
+set textwidth=90
+
+" PLUGINS ---------------------------------------------------------------- {{{
+" Plugin code goes here.
+
+" --- Usage
+" Install packages via: :PlugInstall (in vim)
+" Uninstall packages via: :PlugClean (in vim after removing the package from
+" this file)
+
+" Begin the plugin section
+call plug#begin('~/.vim/plugged')
+
+" --- Installed packages
+
+" --- Add the vim-gitgutter plugin
+Plug 'airblade/vim-gitgutter'
+
+" --- fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Fuzzy find files and open in new buffers: \f
+nnoremap <silent> <leader>f :Files<CR>
+
+" Key bindings for buffer navigation
+
+" Next buffer: \bn
+nnoremap <silent> <leader>bn :bnext<CR>
+" Previous buffer: \bp
+nnoremap <silent> <leader>bp :bprevious<CR>
+" Close current buffer: \bc
+nnoremap <silent> <leader>bc :bd<CR>
+
+" list buffers
+noremap <silent> <leader>ls :ls<CR>
+
+" Custom key binding to open buffer list popup
+nnoremap <silent> <leader>b :Buffers<CR>
+
+" --- Add language server support
+" coc.nvim for LSP support
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" End the plugin section
+call plug#end()
 
 
