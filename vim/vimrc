@@ -29,12 +29,14 @@ colorscheme sublimemonokai
 " Fonts gor the GUI
 set guifont=Monospace\ 12
 
-
 " Cursor highlights
 set cursorline " Highlight cursor line
 "set cursorcolumn " Highlight cursor column
 hi clear CursorLine " Unset cursorline formatting
 hi link CursorLine CursorColumn " Set formatting same as cursorcolumn
+
+" Set vertical line
+set colorcolumn=79
 
 " STATUS LINE ------------------------------------------------------------ {{{
 " Clear status line when vimrc is reloaded.
@@ -62,9 +64,30 @@ set laststatus=2
 " PLUGINS ---------------------------------------------------------------- {{{
 " Plugin code goes here.
 
+" --- Usage
+" Install packages via: :PlugInstall (in vim)
+" Uninstall packages via: :PlugClean (in vim after removing the package from
+" this file)
 
-" }}}
+" Begin the plugin section
+call plug#begin('~/.vim/plugged')
 
+" --- Installed packages
+
+" --- Add the vim-gitgutter plugin
+Plug 'airblade/vim-gitgutter'
+
+" --- Add language server support
+" coc.nvim for LSP support
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Configure coc
+" Use <Tab> and <S-Tab> to navigate through popup menu
+"inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" End the plugin section
+call plug#end()
 
 " Tab behaviour
 set tabstop=4       " number of visual spaces per TAB

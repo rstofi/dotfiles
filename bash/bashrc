@@ -1,5 +1,9 @@
+# --- Enabling fzf
+# I installed based on README
+
+# --- Aliases
+
 # For monitoring my jobs in a slurm queue
 alias sw='watch -n 1 squeue --user={my_username}'
-
 # Aliases for ssh connections (need to set up keys for this)
 alias sshGTI{server}='ssh krozgonyi@{server_ip_address}' # I am not putting the actual IP addresses here
