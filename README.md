@@ -9,6 +9,7 @@ Some dotfiles (such as `.bashrc`) are living in my home and some are under `/.co
 - [vim](https://github.com/rstofi/dotfiles/tree/main/vim/README.md)
 - [tmux](https://github.com/rstofi/dotfiles/tree/main/tmux/README.md)
 - [marp](https://github.com/rstofi/dotfiles/tree/main/marp/README.md)
+- [fzf](https://github.com/rstofi/dotfiles/tree/fzf/marp/README.md)
 
 ## License and usage
 

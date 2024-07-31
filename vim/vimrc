@@ -7,7 +7,8 @@ set showmode
 " Use English as default
 language en_US.utf-8
 set spelllang=en
-" set spell " Enable spell checking
+" Enable default spell checking
+set spell
 
 inoremap <F6> <C-O>:set spell!<CR>
 nnoremap <F6> :set spell!<CR>
@@ -88,11 +89,17 @@ set fileformats=unix,dos
 " Minimum lines to keep above and below cursor when scrolling
 set scrolloff=3
 
+" --- Unable wrap
 " Set wrap
-set wrap
-
+" set wrap
 " Set maximum width for wrap
-set textwidth=90
+" set textwidth=90
+
+" Disable automatic line breaking
+set textwidth=0
+
+" Remove automatic text wrapping
+set formatoptions-=t
 
 " PLUGINS ---------------------------------------------------------------- {{{
 " Plugin code goes here.
@@ -141,5 +148,6 @@ nnoremap <silent> <leader>b :Buffers<CR>
 
 " End the plugin section
 call plug#end()
+
 
 
