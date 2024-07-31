@@ -110,6 +110,9 @@ call plug#begin('~/.vim/plugged')
 " --- Add the vim-gitgutter plugin
 Plug 'airblade/vim-gitgutter'
 
+" --- tmux navigation for panes
+Plug 'christoomey/vim-tmux-navigator'
+
 " --- fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
