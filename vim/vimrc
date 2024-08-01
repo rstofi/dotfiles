@@ -1,3 +1,62 @@
+" .vimrc  bny Kristof Rozgonyi @2024
+
+" PLUGINS --------------------------------------------------------------------
+" Plugin code goes here.
+
+" --- Usage
+" Install packages via: :PlugInstall (in vim)
+" Uninstall packages via: :PlugClean (in vim after removing the package from
+" this file)
+
+" Begin the plugin section
+call plug#begin('~/.vim/plugged')
+
+" --- Installed packages
+
+" --- Color scheme
+Plug 'morhetz/gruvbox'
+
+" --- Airline
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+
+" --- Python syntax highlights
+Plug 'sheerun/vim-polyglot'
+
+" --- Python autocompletion and useful tools
+Plug 'davidhalter/jedi-vim'
+" Disable jedi-vim call signature popup
+let jedi#popup_select_first = 0
+let jedi#show_call_signatures = 0
+
+" --- Install supertab
+Plug 'ervandew/supertab'
+
+" --- Code block indentation
+Plug 'nathanaelkane/vim-indent-guides'
+" enabling by default and configuration
+let indent_guides_enable_on_vim_startup = 1
+let indent_guides_start_level = 2
+let indent_guides_guide_size = 1
+
+" --- Add the vim-gitgutter plugin
+Plug 'airblade/vim-gitgutter'
+
+" --- tmux navigation for panes
+Plug 'christoomey/vim-tmux-navigator'
+
+" --- fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" --- Add language server support
+" coc.nvim for LSP support
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" End the plugin section
+call plug#end()
+" ----------------------------------------------------------------------------
+"
 " basic settings
 set encoding=utf-8
 scriptencoding utf-8
@@ -9,11 +68,56 @@ set showmode
 " Set leader key to space
 let mapleader = "\<Space>"
 
-" " Map leader + y to yank to the system clipboard in normal mode
-nmap <leader>y "+y
+" Map leader + y to yank to the system clipboard in normal mode
+nmap <leader>y "+y<CR>
 
-" " Map leader + y to yank to the system clipboard in visual mode
-vmap <leader>y "+y
+" Map leader + y to yank to the system clipboard in visual mode
+vmap <leader>y "+y<CR>
+
+" Map leader + p to paste from the system clipboard
+nmap <leader>p "+p
+vmap <leader>p "+p
+
+
+" --- fzf key bindings
+
+" Use ripgrep (rg) with fzf
+if executable('rg')
+  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+  let fzf_command_prefix = 'Rg'
+endif
+
+" Function to save the current buffer before performing an action
+function! s:SaveAndExecute(cmd)
+  if &modified
+    write
+  endif
+  execute a:cmd
+endfunction
+
+" Enable autosaving
+" set autowriteall
+
+" Fuzzy find files and open in new buffers: \f
+nnoremap <silent> <leader>f :call <SID>SaveAndExecute('RgFiles')<CR>
+
+" Key bindings for buffer navigation
+
+" Next buffer
+nnoremap <silent> <leader>Bn :call <SID>SaveAndExecute('bnext')<CR>
+" Previous buffer
+nnoremap <silent> <leader>Bp :call <SID>SaveAndExecute('bprevious')<CR>
+" Close current buffer
+nnoremap <silent> <leader>Bc :call <SID>SaveAndExecute('bd')<CR>
+
+" list buffers
+noremap <silent> <leader>ls :ls<CR>
+
+" Custom key binding to open buffer list popup
+" IMPORTANT: if more shortcut starts with the same key binding vim waits
+"   this slows down the popup window. Hence I set the other commands to
+"   start with B instead of b
+nnoremap <silent> <leader>b :call <SID>SaveAndExecute(':RgBuffers')<CR>
 
 " Use English as default
 language en_US.utf-8
@@ -23,6 +127,18 @@ set spell
 
 inoremap <F6> <C-O>:set spell!<CR>
 nnoremap <F6> :set spell!<CR>
+
+" Set colorscheme
+set bg=dark
+colorscheme gruvbox
+
+" Old color scheme - Adjusted to a built-in scheme that might feel closer to GitHub/Sublime
+" See the plugs for the color schema I am using
+" colorscheme sublimemonokai
+
+" Enable Airline and set Gruvbox theme
+" let airline_theme='gruvbox'
+" let airline_powerline_fonts = 1
 
 " Highlight only misspelled words
 highlight SpellBad cterm=underline
@@ -35,11 +151,11 @@ syntax on " Syntax highlight
 set number " Line numbers
 " set number relativenumber " Set relative line numbers
 
-" Color scheme - Adjusted to a built-in scheme that might feel closer to GitHub/Sublime
-colorscheme sublimemonokai
+" Load custom Base16 Atelier Lakeside Dark color scheme
+" colorscheme base16-atelier-lakeside-dark
 
 " Fonts gor the GUI
-set guifont=Monospace\ 12
+set guifont=Monospace\ 10
 
 " Cursor highlights
 set cursorline " Highlight cursor line
@@ -112,53 +228,6 @@ set textwidth=0
 " Remove automatic text wrapping
 set formatoptions-=t
 
-" PLUGINS ---------------------------------------------------------------- {{{
-" Plugin code goes here.
-
-" --- Usage
-" Install packages via: :PlugInstall (in vim)
-" Uninstall packages via: :PlugClean (in vim after removing the package from
-" this file)
-
-" Begin the plugin section
-call plug#begin('~/.vim/plugged')
-
-" --- Installed packages
-
-" --- Add the vim-gitgutter plugin
-Plug 'airblade/vim-gitgutter'
-
-" --- tmux navigation for panes
-Plug 'christoomey/vim-tmux-navigator'
-
-" --- fzf
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-" Fuzzy find files and open in new buffers: \f
-nnoremap <silent> <leader>f :Files<CR>
-
-" Key bindings for buffer navigation
-
-" Next buffer: \bn
-nnoremap <silent> <leader>bn :bnext<CR>
-" Previous buffer: \bp
-nnoremap <silent> <leader>bp :bprevious<CR>
-" Close current buffer: \bc
-nnoremap <silent> <leader>bc :bd<CR>
-
-" list buffers
-noremap <silent> <leader>ls :ls<CR>
-
-" Custom key binding to open buffer list popup
-nnoremap <silent> <leader>b :Buffers<CR>
-
-" --- Add language server support
-" coc.nvim for LSP support
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" End the plugin section
-call plug#end()
 
 
 
