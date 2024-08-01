@@ -4,6 +4,17 @@ scriptencoding utf-8
 set fileencoding=utf-8 " File encoding
 set showmode
 
+"  --- Set mapleader and some global copy options
+
+" Set leader key to space
+let mapleader = "\<Space>"
+
+" " Map leader + y to yank to the system clipboard in normal mode
+nmap <leader>y "+y
+
+" " Map leader + y to yank to the system clipboard in visual mode
+vmap <leader>y "+y
+
 " Use English as default
 language en_US.utf-8
 set spelllang=en
