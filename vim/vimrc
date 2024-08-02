@@ -25,9 +25,6 @@ Plug 'sheerun/vim-polyglot'
 
 " --- Python autocompletion and useful tools
 Plug 'davidhalter/jedi-vim'
-" Disable jedi-vim call signature popup
-let jedi#popup_select_first = 0
-let jedi#show_call_signatures = 0
 
 " --- Install supertab
 Plug 'ervandew/supertab'
@@ -78,6 +75,29 @@ vmap <leader>y "+y<CR>
 nmap <leader>p "+p
 vmap <leader>p "+p
 
+" --- overwrite some movement keys to fit my screen better
+nnoremap <silent> J 5<C-e>  " Scroll down 10 lines
+nnoremap <silent> K 5<C-y>  " Scroll up 10 lines
+
+" --- set indentation removal
+" Remove indentation with Shift-Tab
+nnoremap <S-Tab> <<
+vnoremap <S-Tab> <gv
+inoremap <S-Tab> <C-o><<
+
+" --- Configure jedi behaviour
+let g:jedi#popup_select_first = 0
+let jedi#show_call_signatures = 0
+let g:jedi#use_tabs_not_buffers = 1
+
+" Unmap default Shift-K from jedi-vim
+augroup JediVim
+  autocmd!
+  autocmd FileType python nunmap <buffer> K
+augroup END
+
+" Remap Shift k to <leader>shift k
+nnoremap <silent> <leader>K :call jedi#show_documentation()<CR>
 
 " --- fzf key bindings
 
