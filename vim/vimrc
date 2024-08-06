@@ -50,6 +50,12 @@ Plug 'junegunn/fzf.vim'
 " coc.nvim for LSP support
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" MARKDOWN preview support
+" If you don't have nodejs and yarn
+" use pre build, add 'vim-plug' to the filetype list so vim-plug can update this plugin
+" see: https://github.com/iamcco/markdown-preview.nvim/issues/50
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
 " End the plugin section
 call plug#end()
 " ----------------------------------------------------------------------------
@@ -138,6 +144,9 @@ noremap <silent> <leader>ls :ls<CR>
 "   this slows down the popup window. Hence I set the other commands to
 "   start with B instead of b
 nnoremap <silent> <leader>b :call <SID>SaveAndExecute(':RgBuffers')<CR>
+
+" Set markdown-preview commands
+nmap <silent> <leader>M  <Plug>MarkdownPreview<CR>
 
 " Use English as default
 language en_US.utf-8
