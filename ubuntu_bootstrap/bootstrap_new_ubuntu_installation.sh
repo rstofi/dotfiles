@@ -117,6 +117,7 @@ packages=(
     transmission # Torrent tool
     gh # GitHub CLI for the terminal
     lf # Command-line file manager
+    tldr # man/help alternative
     numix-icon-theme-circle # Icon theme (from PPA)
     neofetch # Displaying ASCII Linux logo in terminal
     dconf-cli # Required to run Gogh (installing gruvbox color scheme)
