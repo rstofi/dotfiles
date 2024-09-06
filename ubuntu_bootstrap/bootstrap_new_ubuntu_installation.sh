@@ -115,9 +115,10 @@ packages=(
     gnome-tweaks # Customizing gnome
     vlc # For multimedia support
     transmission # Torrent tool
-    gh # GitHub CLI for the terminal
+    #gh # GitHub CLI for the terminal
     lf # Command-line file manager
     tldr # man/help alternative
+    gdu # CLI tool for disk usage analysis
     numix-icon-theme-circle # Icon theme (from PPA)
     neofetch # Displaying ASCII Linux logo in terminal
     dconf-cli # Required to run Gogh (installing gruvbox color scheme)
