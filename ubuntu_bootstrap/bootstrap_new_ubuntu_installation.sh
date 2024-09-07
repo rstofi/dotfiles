@@ -3,6 +3,8 @@
 # ---
 # Bootstrap script for installing packages and configuring
 # most of the environment on *Ubuntu* after a minimal installation.
+# This is a bash script, so run this via:
+# `./bootstrap_new_ubuntu_installation.sh`
 #
 # Tested on Ubuntu 24.04
 #
