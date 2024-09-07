@@ -18,5 +18,5 @@ echo "[ -f ~/.fzf.bash ] && source ~/.fzf.bash" >> ~/.bashrc
 
 
 
-
+#### Install the [tmux-plug](https://github.com/tmux-plugins/tpm)
 
