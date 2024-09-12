@@ -115,6 +115,7 @@ packages=(
     curl # HTTP requests
     ubuntu-restricted-extras # Additional codecs support 
     gnome-tweaks # Customizing gnome
+    thunderbird # My choice of email client (not coming with the minimalist Ubuntu install)
     vlc # For multimedia support
     transmission # Torrent tool
     #gh # GitHub CLI for the terminal
