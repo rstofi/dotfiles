@@ -118,6 +118,7 @@ packages=(
     thunderbird # My choice of email client (not coming with the minimalist Ubuntu install)
     vlc # For multimedia support
     transmission # Torrent tool
+    libreoffice # Missing from minimalist install
     #gh # GitHub CLI for the terminal
     lf # Command-line file manager
     tldr # man/help alternative
