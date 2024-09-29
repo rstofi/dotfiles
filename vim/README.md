@@ -1,14 +1,20 @@
 ## vim setup
 
-For now, I am using simply `vim`, but I plan to update to `neovim` once I am more comfortable in the terminal and I need more configuration options.
+I am using `vim`, and currently, I am *not* planingn to update to `neovim` as I am happy with my setup.
+
+### Custom key bindings
 
 I have set my `<leader>` character to `space`.
 
 (Note that my `tmux` `<leader>` is set to `C`+`space`!)
 
-### Notes on Plugs
+### Plugs
 
-I try to minimize plugs and only have the ones I am actually using. Below, I have a list of my plugs and what I am using them:
+I try to minimize plugs and only have the ones I am actually using.
+
+To manage my plugs, I use the [vim plug](https://github.com/junegunn/vim-plug) plugin manager. See the documentation for the installation instructions.
+
+The list of my plugs and what I am using them for:
 
 - [jedi-vim](https://github.com/davidhalter/jedi-vim) for python auto completion support
 
@@ -24,16 +30,6 @@ I try to minimize plugs and only have the ones I am actually using. Below, I hav
 `Tab` - autocomplete python code and variables
 `space` `r` - rename variable
 
-
 ### Color scheme setup
 
-Setting up a simple colorscheme:
-
-```bash
-mkdir -p ~/.vim/colors
-mv /pathr_to_your_downloaded/mycolorscheme.vim ~/.vim/colors/
-```
-
-set the colorscheme via: `colorscheme mycolorscheme` in `.vimrc`.
-
-Currently I use the [sublimemonokai](https://github.com/ErichDonGubler/vim-sublime-monokai) colorscheme.
+Similary to my terminal, I use the gruvbox color scheme.

@@ -123,7 +123,7 @@ packages=(
     lf # Command-line file manager
     tldr # man/help alternative
     gdu # CLI tool for disk usage analysis
-    numix-icon-theme-circle # Icon theme (from PPA)
+    #numix-icon-theme-circle # Icon theme (from PPA)
     neofetch # Displaying ASCII Linux logo in terminal
     dconf-cli # Required to run Gogh (installing gruvbox color scheme)
     uuid-runtime # Required to run Gogh (installing gruvbox color scheme)
@@ -226,18 +226,6 @@ else
         echo "  $package"
     done
 fi
-
-# --- Echo further instructions
-echo "Further instructions for some manual steps ... "
-# gruvbox terminal color scheme
-echo ""
-echo "--- Configure GNOME shell gruvbox color scheme ---"
-echo ""
-echo "  >>> bash -c \"\$(wget -qO- https://git.io/vQgMr)\" "
-echo "  select Gruvbox Dark (108)"
-echo "  press enter"
-echo "  uncheck \"terminal bell\" in terminal preferences"
-echo ""
 
 # --- Echo termination
 if $run; then
