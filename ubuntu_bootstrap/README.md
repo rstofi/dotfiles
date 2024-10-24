@@ -2,11 +2,29 @@
 
 In this folder, I try to collect all the steps needed to set up my working environment, and I provide a bootsrapping script to automatically install all the necessary packages. Detailed instructions are provided in this README file.
 
-### Manual steps
+#### Run bootstrapping script
 
-#### Fix [fzf](https://github.com/junegunn/fzf) install if it is broken
+Download the `bootstrap_new_ubuntu_installation.sh` from this git repo by hand.
 
-Not sure if my bootstrap script's `fzf` installation is correct or not, and so if `fzf` is not working, run the following commands by hand:
+Run the script first with the `--dry-run` switch to see, which packages will be installed.
+
+To actually install all the packages, run the cript again, with the `--run` flag.
+
+#### Configure [Github](https://github.com/) access
+
+Follow [these instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to configure access to GitHub via adding a new ssh key.
+
+#### Download and configure the [dotfiles](https://github.com/rstofi/dotfiles) repo
+
+`git clone` this repo to local.
+
+Delete the  `bootstrap_new_ubuntu_installation.sh` script downloaded before.
+
+Run the `setup_dotfiles_symlink.sh` script to create symlinks for `vim` and `tmux` configuration scripts.
+
+#### Install [fzf](https://github.com/junegunn/fzf) manually
+
+Install `fzf` via the following commands:
 
 ```bash
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -14,7 +32,9 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 echo "[ -f ~/.fzf.bash ] && source ~/.fzf.bash" >> ~/.bashrc
 ```
 
-#### Configure [gruvbox](https://github.com/morhetz/gruvbox) color scheme
+see the [official page]((https://github.com/junegunn/fzf) for more details.
+
+#### Configure [gruvbox](https://github.com/morhetz/gruvbox) color scheme for terminal
 
 Use the [gogh installer](https://github.com/Gogh-Co/Gogh). Follow the instructions and this automatically, configures the gruvbox color palette for the terminal.
 
@@ -34,7 +54,7 @@ sudo mv gruvbox-dark-icons-gtk /usr/share/icons/
 
 Then, the icon theme is available from `gnome-tweaks`
 
-#### Install [vim-plug](https://github.com/junegunn/vim-plug)
+#### Install [vim-plug](https://github.com/junegunn/vim-plug) plugs
 
 I configured `vim-plug` to be part of my `.vimrc` file, so only need to run
 
@@ -42,9 +62,9 @@ I configured `vim-plug` to be part of my `.vimrc` file, so only need to run
 :PlugInstall
 ```
 
-in vim, to install the plugins `vim` uses.
+in `vim`, to install the plugins `vim` uses.
 
-#### Install [tmux-plug](https://github.com/tmux-plugins/tpm)
+#### Install [tmux-plug](https://github.com/tmux-plugins/tpm) plugs
 
 Install `tmux-plug` via:
 

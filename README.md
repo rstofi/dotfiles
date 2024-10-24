@@ -15,7 +15,6 @@ I am working mostly on Ubuntu, but my setup should work on other Debian-based sy
 - [ubuntu_bootstrap](https://github.com/rstofi/dotfiles/tree/main/ubuntu_bootstrap/README.md)
 - [vim](https://github.com/rstofi/dotfiles/tree/main/vim/README.md)
 - [tmux](https://github.com/rstofi/dotfiles/tree/main/tmux/README.md)
-- [fzf](https://github.com/rstofi/dotfiles/tree/fzf/marp/README.md)
 
 ## License and usage
 

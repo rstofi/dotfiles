@@ -108,7 +108,9 @@ packages=(
     git # My version control tool of choice
     vim # My editor of choice
     tmux # Terminal multiplexer
-    golang-go # GO rograming language (from PPA)
+    vim-gtk3 # For clipboard support
+    xclip # For tmux mouse support
+    #golang-go # GO rograming language (from PPA) # Something is broken, disabling for now
     #fzf # Fuzzy finder # I install it from source to enable terminal integration
     ripgrep # speed up for fzf
     wget # Downloading from terminal
