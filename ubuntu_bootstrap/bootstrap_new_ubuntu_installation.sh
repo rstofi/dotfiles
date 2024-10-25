@@ -121,14 +121,15 @@ packages=(
     vlc # For multimedia support
     transmission # Torrent tool
     libreoffice # Missing from minimalist install
-    #gh # GitHub CLI for the terminal
     lf # Command-line file manager
     tldr # man/help alternative
     gdu # CLI tool for disk usage analysis
-    #numix-icon-theme-circle # Icon theme (from PPA)
     neofetch # Displaying ASCII Linux logo in terminal
     dconf-cli # Required to run Gogh (installing gruvbox color scheme)
     uuid-runtime # Required to run Gogh (installing gruvbox color scheme)
+    texlive-full # LaTeX all packages
+    ca-certificates # For Docker
+    htop # For a better top experience
     # Add more packages as needed
 )
 
@@ -161,7 +162,6 @@ fi
 install_third_party_packages() {
     declare -A packages=(
     ["fzf"]="git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf; ~/.fzf/install --all; echo \"[ -f ~/.fzf.bash ] && source ~/.fzf.bash \" >> ~/.bashrc"
-    #["vim-plug"]="curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" # For installing vim plugins (don't need this as I've added auto install to my vimrc)
     # Add more third-party packages as needed
     # ["package-name"]="command to install package"
     )
