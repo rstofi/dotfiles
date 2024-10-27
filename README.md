@@ -4,7 +4,7 @@ Once again, I am attempting to move my workflow to the terminal and to text-base
 
 For each package, I use, see the respective sub-directory. For setting up this environment, see pages under [ubuntu_bootstrap](https://github.com/rstofi/dotfiles/tree/main/ubuntu_bootstrap/README.md).
 
-After setting up all software run the `setup_dotfiles_symlink.sh` script to base `vim` and `tmux` configuration of this repo, and use it as a single source of truth.
+After setting up all software run the `/secipts/setup_dotfiles_symlink.sh` script to base `vim` and `tmux` configuration of this repo, and use it as a single source of truth.
 
 Ideally, after completing the bootstrap steps, cloning this repo and running the script should produce my working environment.
 
@@ -12,9 +12,10 @@ I am working mostly on Ubuntu, but my setup should work on other Debian-based sy
 
 ## Index
 
-- [ubuntu_bootstrap](https://github.com/rstofi/dotfiles/tree/main/ubuntu_bootstrap/README.md)
+- [scripts](https://github.com/rstofi/dotfiles/tree/main/scripts/README.md)
 - [vim](https://github.com/rstofi/dotfiles/tree/main/vim/README.md)
 - [tmux](https://github.com/rstofi/dotfiles/tree/main/tmux/README.md)
+- [ubuntu_bootstrap](https://github.com/rstofi/dotfiles/tree/main/ubuntu_bootstrap/README.md)
 
 ## License and usage
 

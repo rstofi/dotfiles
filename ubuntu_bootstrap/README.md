@@ -18,9 +18,9 @@ Follow [these instructions](https://docs.github.com/en/authentication/connecting
 
 `git clone` this repo to local.
 
-Delete the  `bootstrap_new_ubuntu_installation.sh` script downloaded before.
+Delete the `bootstrap_new_ubuntu_installation.sh` script downloaded before.
 
-Run the `setup_dotfiles_symlink.sh` script to create symlinks for `vim` and `tmux` configuration scripts.
+Run the `scripts/setup_dotfiles_symlink.sh` script to create symlinks for `vim` and `tmux` configuration scripts.
 
 #### Install [fzf](https://github.com/junegunn/fzf) manually
 
@@ -83,3 +83,6 @@ tmux source ~/.tmux.conf
 Then, to install plugs run `prefix + I` in a tmux session to install the plugs defined. My prefix is set to `C+space`.
 
 
+#### Configure LaTeX compiler script
+
+To more easily work with LaTeX when needed, run the `scripts/add_latex_compiler_to_shell.sh` script and then source the `~/.bashrc` file.
