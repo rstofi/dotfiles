@@ -111,7 +111,7 @@ packages=(
     vim-gtk3 # For clipboard support
     xclip # For tmux mouse support
     #golang-go # GO rograming language (from PPA) # Something is broken, disabling for now
-    #fzf # Fuzzy finder # I install it from source to enable terminal integration
+    #fzf # Fuzzy finder # I install it from source to enable terminal integration (see later in the code)
     ripgrep # speed up for fzf
     wget # Downloading from terminal
     curl # HTTP requests
@@ -161,9 +161,10 @@ fi
 # --- Install third-party packages from source
 install_third_party_packages() {
     declare -A packages=(
-    ["fzf"]="git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf; ~/.fzf/install --all; echo \"[ -f ~/.fzf.bash ] && source ~/.fzf.bash \" >> ~/.bashrc"
+    ["fzf"]="git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf; ~/.fzf/install --all; grep -qxF \"[ -f ~/.fzf.bash ] && source ~/.fzf.bash\" ~/.bashrc || echo \"[ -f ~/.fzf.bash ] && source ~/.fzf.bash\" >> ~/.bashrc"
     # Add more third-party packages as needed
     # ["package-name"]="command to install package"
+    ["zen"]="bash <(curl https://updates.zen-browser.app/appimage.sh)" # Browser of choice
     )
 
     echo "Installing third-pary packages from source:"
