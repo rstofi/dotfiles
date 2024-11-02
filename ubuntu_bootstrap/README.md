@@ -85,4 +85,4 @@ Then, to install plugs run `prefix + I` in a tmux session to install the plugs d
 
 #### Configure LaTeX compiler script
 
-To more easily work with LaTeX when needed, run the `scripts/add_latex_compiler_to_shell.sh` script and then source the `~/.bashrc` file.
+To more easily work with LaTeX when needed, set up an alias (`latex_compiler`) for running the `scripts/latex_compiler.sh` script in the `.bashrc` file. The alias is included in this repo in `bash/bashrc`.
