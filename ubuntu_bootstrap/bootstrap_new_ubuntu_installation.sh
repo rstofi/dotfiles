@@ -112,7 +112,7 @@ packages=(
     xclip # For tmux mouse support
     #golang-go # GO rograming language (from PPA) # Something is broken, disabling for now
     #fzf # Fuzzy finder # I install it from source to enable terminal integration (see later in the code)
-    ripgrep # speed up for fzf
+    ripgrep # speed up for fzf and for using in vim (Tag support and navigation added to my vimrc)
     wget # Downloading from terminal
     curl # HTTP requests
     ubuntu-restricted-extras # Additional codecs support 
@@ -130,6 +130,7 @@ packages=(
     texlive-full # LaTeX all packages
     ca-certificates # For Docker
     htop # For a better top experience
+    universal-ctags # For tagging code blocks in vim
     # Add more packages as needed
 )
 

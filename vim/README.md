@@ -8,7 +8,7 @@ To support copying to and from the system's  clipboard, I need to install the `v
 
 I have set my `<leader>` character to `space`.
 
-(Note that my `tmux` `<leader>` is set to `C`+`space`!)
+(Note that my `tmux` `<leader>` is set to `ctrl`+`space`!)
 
 ### Plugs
 
@@ -21,11 +21,12 @@ The list of my plugs and what I am using them for:
 - [gruvbox](https://github.com/morhetz/gruvbox) color scheme
 - [polyglot](https://github.com/sheerun/vim-polyglot) language package collection for syntax highlights 
 - [jedi-vim](https://github.com/davidhalter/jedi-vim) for python auto completion support
-- [supertab](https://github.com/ervandew/supertab) autocompletion via <TAB>
+- [supertab](https://github.com/ervandew/supertab) general autocompletion via `tab`
 - [indent-guides](https://github.com/preservim/vim-indent-guides) indent guides for Python
 - [gitgutter](https://github.com/airblade/vim-gitgutter) show git diff hunks in the sign column
 - [tmux-navigator](https://github.com/christoomey/vim-tmux-navigator) enable navigating between tmux panes from vim
 - [fzf](https://github.com/junegunn/fzf.vim) fuzzy finder for vim
+- [tagbar](https://github.com/preservim/tagbar) navigation for files based on on-the-fly generated tags
 - [markdown-preview](https://github.com/iamcco/markdown-preview.nvim) preview markdown files in the browser 
 
 ### Useful plug command cheat sheet
@@ -34,10 +35,18 @@ The list of my plugs and what I am using them for:
 
 - `space` `y` - yank to system clipboard
 - `space` `p` - paste from system clipboard
+- `space` `f` - open new file in new `vim` tab using `fzf`
+- `space` `b` - move between opened `vim` tabs via `fzf`
+- `space` `s` - search string in *all* opened `vim` tabs via `fzf` 
+- `tab` - autocomplete (if possible)
+
+**Coding general**
+
+- `space` `t` - move in code based on tags (functions mainly)
 
 **Pyton**
 
-- `Tab` - autocomplete python code and variables
+- `space` `d` - go to definition
 - `space` `r` - rename variable
 
 **Markdown**

@@ -64,6 +64,9 @@ Plug 'junegunn/fzf.vim'
 " see: https://github.com/iamcco/markdown-preview.nvim/issues/50
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
+" Create tags for files on-the-fly for easier navigation
+Plug 'majutsushi/tagbar'
+
 " End the plugin section
 call plug#end()
 " ----------------------------------------------------------------------------
@@ -93,6 +96,13 @@ vmap <leader>p "+p
 nnoremap <silent> J 5<C-e>  " Scroll down 10 lines
 nnoremap <silent> K 5<C-y>  " Scroll up 10 lines
 
+" --- Set up automatic tagbar and movement
+" Enable autoclose
+let g:tagbar_autoclose = 1
+" open and autojump to tagbar
+" nnoremap <silent> <leader>t :TagbarToggle<CR>:wincmd p<CR>
+nnoremap <silent> <leader>t :TagbarToggle<CR>
+
 " --- set indentation removal
 " Remove indentation with Shift-Tab
 nnoremap <S-Tab> <<
@@ -108,10 +118,14 @@ let g:jedi#use_tabs_not_buffers = 1
 augroup JediVim
   autocmd!
   autocmd FileType python nunmap <buffer> K
+    autocmd FileType python nunmap <buffer> <leader>s
 augroup END
 
 " Remap Shift k to <leader>shift k
 nnoremap <silent> <leader>K :call jedi#show_documentation()<CR>
+
+" Remap "Go to Definition" to <leader>d
+nnoremap <silent> <leader>d :call jedi#goto()<CR>
 
 " --- fzf key bindings
 
@@ -152,6 +166,9 @@ noremap <silent> <leader>ls :ls<CR>
 "   this slows down the popup window. Hence I set the other commands to
 "   start with B instead of b
 nnoremap <silent> <leader>b :call <SID>SaveAndExecute(':RgBuffers')<CR>
+
+" set file in-line search wit <leader>s (no collision of commands, see above)
+nnoremap <silent> <leader>s :call <SID>SaveAndExecute(':RgLines')<CR>
 
 " Set markdown-preview commands
 nmap <silent> <leader>M  <Plug>MarkdownPreview<CR>
