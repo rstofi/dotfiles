@@ -9,6 +9,8 @@ alias sw='watch -n 1 squeue --user={my_username}'
 alias sshGTI{server}='ssh krozgonyi@{server_ip_address}' # I am not putting the actual IP addresses here
 # Alias for LaTeX compiler script so I can run it from anywhere (use it with the -c switch)
 alias latex_compiler="$HOME/dotfiles/scripts/latex_compiler.sh"
+# Alias for lazygit
+alias lg='lazygit'
 
 # --- Overwrite the bash shell prompt by adding []:
 OLD_PS1=$PS1
