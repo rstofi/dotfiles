@@ -131,6 +131,7 @@ packages=(
     ca-certificates # For Docker
     htop # For a better top experience
     universal-ctags # For tagging code blocks in vim
+    libfuse2t64 # To enable installing AppImages
     # Add more packages as needed
 )
 

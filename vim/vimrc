@@ -175,12 +175,50 @@ nmap <silent> <leader>M  <Plug>MarkdownPreview<CR>
 
 " Use English as default
 language en_US.utf-8
+
+" Enable spell checking for .tex files
+autocmd FileType tex setlocal spell spelllang=en
+let g:tex_comment_nospell = 0  " Ensure comments are spell-checked
+autocmd FileType tex syntax spell toplevel  " Apply spell checking globally
+
 set spelllang=en
 " Enable default spell checking
 set spell
 
+" Function to toggle spell checking languages between en and hu and map it to
+" F5
+function! ToggleSpellLang()
+  if &spelllang == "en"
+    set spelllang=hu
+    echo "Spell checking language set to Hungarian (hu)"
+  else
+    set spelllang=en
+    echo "Spell checking language set to English (en)"
+  endif
+endfunction
+
+nnoremap <F5> :call ToggleSpellLang()<CR>
+
+" map spell checking on-off toggle to F6
 inoremap <F6> <C-O>:set spell!<CR>
 nnoremap <F6> :set spell!<CR>
+
+" Function to toggle filetype and map it into F7
+function! ToggleFiletype()
+  if exists("b:original_filetype") && &filetype == "plaintext"
+    " Restore the original filetype
+    let &filetype = b:original_filetype
+    unlet b:original_filetype
+    echo "Filetype restored to " . &filetype
+  else
+    " Save the current filetype and set to plaintext
+    let b:original_filetype = &filetype
+    set filetype=plaintext
+    echo "Filetype set to plaintext"
+  endif
+endfunction
+
+nnoremap <F7> :call ToggleFiletype()<CR>
 
 " Set colorscheme
 set bg=dark

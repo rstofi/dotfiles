@@ -39,6 +39,8 @@ The list of my plugs and what I am using them for:
 - `space` `b` - move between opened `vim` tabs via `fzf`
 - `space` `s` - search string in *all* opened `vim` tabs via `fzf` 
 - `tab` - autocomplete (if possible)
+- `F5` - toggle spell checking to HU and back to EN (installs language pack the first time)
+- `F6` - toggle spell checking on/off
 
 **Coding general**
 
@@ -52,6 +54,10 @@ The list of my plugs and what I am using them for:
 **Markdown**
 
 - `space` `M` - preview markdown file in the browser
+
+**LaTeX**
+
+- `F7` - toggle the filetype to plain text (helpful if spell checking does not work properly)
 
 ### Color scheme setup
 
