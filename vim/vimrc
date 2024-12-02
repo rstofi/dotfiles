@@ -112,7 +112,11 @@ inoremap <S-Tab> <C-o><<
 " --- Configure jedi behaviour
 let g:jedi#popup_select_first = 0
 let jedi#show_call_signatures = 0
-let g:jedi#use_tabs_not_buffers = 1
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#use_tabs = 1
+
+" Disable tabs as I only use buffers
+" set tabpagemax=0
 
 " Unmap default Shift-K from jedi-vim
 augroup JediVim
