@@ -79,6 +79,9 @@ scriptencoding utf-8
 set fileencoding=utf-8 " File encoding
 set showmode
 
+" Set autosaving when changing files
+set autowriteall
+
 "  --- Set mapleader and some global copy options
 
 " Set leader key to space
