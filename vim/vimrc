@@ -139,6 +139,27 @@ if executable('rg')
   let fzf_command_prefix = 'Rg'
 endif
 
+" Function to call git grep for searching in a git repo
+command! -nargs=+ GitGrep call fzf#vim#grep(
+\ 'git grep --line-number --column -I '.shellescape(<q-args>),
+\ 1,
+\ fzf#vim#with_preview(),
+\ 0)
+
+" Prompt the user for a git grep pattern and execute GitGrep with it
+function! s:GitGrepSearch()
+  let l:pattern = input('Git grep pattern: ')
+  if empty(l:pattern)
+    " If the user presses Enter without providing a pattern, just return
+    return
+  endif
+  " Execute GitGrep with the provided pattern
+  execute 'GitGrep ' . l:pattern
+endfunction
+
+" Map this to <leader>g
+nnoremap <silent> <leader>g :call <SID>GitGrepSearch()<CR>
+
 " Function to save the current buffer before performing an action
 function! s:SaveAndExecute(cmd)
   if &modified

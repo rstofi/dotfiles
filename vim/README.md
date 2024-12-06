@@ -38,6 +38,7 @@ The list of my plugs and what I am using them for:
 - `space` `f` - open new file in new `vim` tab using `fzf`
 - `space` `b` - move between opened `vim` tabs via `fzf`
 - `space` `s` - search string in *all* opened `vim` tabs via `fzf` 
+- `space` `b` - search in a (the current) git repository via `git grep`
 - `tab` - autocomplete (if possible)
 - `F5` - toggle spell checking to HU and back to EN (installs language pack the first time)
 - `F6` - toggle spell checking on/off
