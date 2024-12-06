@@ -33,6 +33,8 @@ Plug 'sheerun/vim-polyglot'
 
 " --- Python autocompletion and useful tools
 Plug 'davidhalter/jedi-vim'
+" Disable jedi-vim's default shortcuts before call plug#end()
+let g:jedi#use_shortcuts = 0
 
 " --- Install supertab
 Plug 'ervandew/supertab'
@@ -128,7 +130,7 @@ augroup END
 " Remap Shift k to <leader>shift k
 nnoremap <silent> <leader>K :call jedi#show_documentation()<CR>
 
-" Remap "Go to Definition" to <leader>d
+" Remap "Go to Definition" to <leader>d and free up <leader>g
 nnoremap <silent> <leader>d :call jedi#goto()<CR>
 
 " --- fzf key bindings
@@ -157,7 +159,8 @@ function! s:GitGrepSearch()
   execute 'GitGrep ' . l:pattern
 endfunction
 
-" Map this to <leader>g
+" Map this to <leader>a
+autocmd FileType python silent! nunmap <buffer> <leader>g
 nnoremap <silent> <leader>g :call <SID>GitGrepSearch()<CR>
 
 " Function to save the current buffer before performing an action
