@@ -4,6 +4,8 @@ I am using `vim`, and currently, I am *not* planingn to update to `neovim` as I 
 
 To support copying to and from the system's  clipboard, I need to install the `vim-gtk3` package.
 
+I have configured my `vimrc` to save the session with all the buffers into the `~/.vim/sessions/default.vim` file. So if I close vim, I can re-open the session if I want to. I only hold the *last* session (I can also exit a session without saving it) in a file for now.
+
 ### Custom key bindings
 
 I have set my `<leader>` character to `space`.
@@ -39,6 +41,8 @@ The list of my plugs and what I am using them for:
 - `space` `b` - move between opened `vim` tabs via `fzf`
 - `space` `s` - search string in *all* opened `vim` tabs via `fzf` 
 - `space` `b` - search in a (the current) git repository via `git grep`
+- `space` `W` - save all buffers and exit, without saving the session (incl buffers)
+- `space` `L` - load the lastly closed session (and all its buffers)
 - `tab` - autocomplete (if possible)
 - `F5` - toggle spell checking to HU and back to EN (installs language pack the first time)
 - `F6` - toggle spell checking on/off

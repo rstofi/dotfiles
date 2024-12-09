@@ -82,6 +82,31 @@ set showmode
 " Set autosaving when changing files
 set autowriteall
 
+" --- Save buffers on exiting vim and reload them with a <leader>L
+"  shortcut only -> so when I have multiple vim instances open, they
+"  do not contain the same files opened. This is to prevent having
+"  multiple edits on the same file.
+"
+"  When having multiple vim sessions open, each of them overwrites
+"  the vim session file when closed. So only the *lastly* closed
+"  instance will be saved to the session file
+"
+"  To close the current session without saving, use <leader>W
+"
+"  The macro saves the vim session into a file:
+"  ~/.vim/sessions/default.vim
+
+" Directory to store sessions (create it if it doesn't exist)
+if !isdirectory(expand('~/.vim/sessions'))
+    call mkdir(expand('~/.vim/sessions'), "p")
+endif
+
+" Automatically save the session on Vim exit
+autocmd VimLeave * mksession! ~/.vim/sessions/default.vim
+
+" If a default session file exists, load it when Vim starts
+" autocmd VimEnter * if filereadable(expand('~/.vim/sessions/default.vim')) | execute 'source ~/.vim/sessions/default.vim' | endif
+
 "  --- Set mapleader and some global copy options
 
 " Set leader key to space
@@ -96,6 +121,23 @@ vmap <leader>y "+y<CR>
 " Map leader + p to paste from the system clipboard
 nmap <leader>p "+p
 vmap <leader>p "+p
+
+" Shortcut to load the last session buffers session
+nnoremap <leader>L :execute 'source ' . $HOME . '/.vim/sessions/default.vim'<CR>
+
+" Function to close all buffers and do not overwrite the default session file
+function! CloseAllBuffersNoSession()
+  " Write all changes first
+  wall
+  " Delete all buffers without triggering autocmd
+  noautocmd bufdo bdelete
+
+  " Quit Vim without triggering autocmd
+  noautocmd qa
+endfunction
+
+" Map <leader>W to close all buffers and exit without overwriting the session
+nnoremap <silent> <leader>W :call CloseAllBuffersNoSession()<CR>
 
 " --- overwrite some movement keys to fit my screen better
 nnoremap <silent> J 5<C-e>  " Scroll down 10 lines
