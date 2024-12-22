@@ -11,6 +11,8 @@ alias sshGTI{server}='ssh krozgonyi@{server_ip_address}' # I am not putting the 
 alias latex_compiler="$HOME/dotfiles/scripts/latex_compiler.sh"
 # Alias for lazygit
 alias lg='lazygit'
+# Alias for init_tmux script
+alias init_tmux="$HOME/dotfiles/scripts/init_general_tmux_session.sh"
 
 # --- Overwrite the bash shell prompt by adding []:
 OLD_PS1=$PS1
