@@ -40,6 +40,8 @@ cd "$TEX_DIR" || exit 1
 # Run pdflatex twice for cross-references and bibliography
 echo "Compiling $TEX_FILE..."
 pdflatex "$TEX_NAME.tex"
+bibtex "$TEX_NAME"
+pdflatex "$TEX_NAME.tex"
 pdflatex "$TEX_NAME.tex"
 
 # Check if the PDF was created successfully
