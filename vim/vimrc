@@ -36,6 +36,13 @@ Plug 'davidhalter/jedi-vim'
 " Disable jedi-vim's default shortcuts before call plug#end()
 let g:jedi#use_shortcuts = 0
 
+" --- SQL syntax highlights
+Plug 'lifepillar/pgsql.vim'
+let g:sql_type_default = 'pgsql'
+
+" --- SQL autocomplete
+Plug 'vim-scripts/SQLComplete.vim'
+
 " --- Install supertab
 Plug 'ervandew/supertab'
 
