@@ -4,7 +4,7 @@ In this folder, I try to collect all the steps needed to set up my working envir
 
 #### Run bootstrapping script
 
-Download the `bootstrap_new_ubuntu_installation.sh` from this git repo by hand.
+Download the `bootstrap_new_ubuntu_installation.sh` from this git repo by hand and make it executable via `chmod +x bootstrap_new_ubuntu_installation.sh`.
 
 Run the script first with the `--dry-run` switch to see, which packages will be installed.
 
@@ -20,9 +20,12 @@ Follow [these instructions](https://docs.github.com/en/authentication/connecting
 
 Delete the `bootstrap_new_ubuntu_installation.sh` script downloaded before.
 
-Run the `scripts/setup_dotfiles_symlink.sh` script to create symlinks for `vim` and `tmux` configuration scripts.
+Run the `scripts/setup_dotfiles_symlink.sh` script to create symlinks for `vim` and `tmux` configuration scripts. You also need to make it executable via `chmod +x`.
 
 #### Install [fzf](https://github.com/junegunn/fzf) manually
+
+>[!NOTE]
+> You might not need to run the `git clone` command, as it is already cloned in the bootstrap step.
 
 Install `fzf` via the following commands:
 
@@ -41,8 +44,8 @@ Use the [gogh installer](https://github.com/Gogh-Co/Gogh). Follow the instructio
 The instructions:
 
 ```
-bash -c \"\$(wget -qO- https://git.io/vQgMr)\" 
-#Select the gruvbox theme (108)
+bash -c "$(wget -qO- https://git.io/vQgMr)"
+#Select the gruvbox theme
 ```
 
 Download and set up the icon theme via:

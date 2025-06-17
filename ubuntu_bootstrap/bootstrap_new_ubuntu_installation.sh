@@ -132,6 +132,10 @@ packages=(
     htop # For a better top experience
     universal-ctags # For tagging code blocks in vim
     libfuse2t64 # To enable installing AppImages
+    #lazygit # TUI for git operations (Four Ubuntu 25.04 + only!)
+    xauth # For WSL
+    dbus-x11 # For WSL
+    gnome-shell # For WSL to replace the default 256 term terminal
     # Add more packages as needed
 )
 
