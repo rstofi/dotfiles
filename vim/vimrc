@@ -103,6 +103,9 @@ set autowriteall
 "  The macro saves the vim session into a file:
 "  ~/.vim/sessions/default.vim
 
+" Store the directory where vim was started
+let g:vim_startup_directory = getcwd()
+
 " Directory to store sessions (create it if it doesn't exist)
 if !isdirectory(expand('~/.vim/sessions'))
     call mkdir(expand('~/.vim/sessions'), "p")
@@ -119,18 +122,49 @@ autocmd VimLeave * mksession! ~/.vim/sessions/default.vim
 " Set leader key to space
 let mapleader = "\<Space>"
 
-" Map leader + y to yank to the system clipboard in normal mode
-nmap <leader>y "+y<CR>
+" Clipboard support for WSL (win32yank.exe file is needed !)
+if system('uname -r') =~ "microsoft"
+  " Auto-copy any yank operation to Windows clipboard
+  augroup WSLYank
+    autocmd!
+    autocmd TextYankPost * if v:event.operator ==# 'y' | call system('win32yank.exe -i --crlf', @") | endif
+  augroup END
+  
+  " Simplified mappings - the autocmd will handle Windows clipboard for yanking
+  nmap <leader>y "+y
+  vmap <leader>y "+y
+  
+  " For pasting from Windows clipboard, we need explicit commands
+  nmap <leader>p :let @"=system('win32yank.exe -o --lf')<CR>p
+  vmap <leader>p :let @"=system('win32yank.exe -o --lf')<CR>p
+else
+  " Non-WSL systems - use normal clipboard
 
-" Map leader + y to yank to the system clipboard in visual mode
-vmap <leader>y "+y<CR>
-
-" Map leader + p to paste from the system clipboard
-nmap <leader>p "+p
-vmap <leader>p "+p
+  " Map leader + y to yank to the system clipboard in normal mode
+  nmap <leader>y "+y
+  " Map leader + y to yank to the system clipboard in visual mode
+  vmap <leader>y "+y
+  " Map leader + p to paste from the system clipboard
+  nmap <leader>p "+p
+  vmap <leader>p "+p
+endif
 
 " Shortcut to load the last session buffers session
-nnoremap <leader>L :execute 'source ' . $HOME . '/.vim/sessions/default.vim'<CR>
+" nnoremap <leader>L :execute 'source ' . $HOME . '/.vim/sessions/default.vim'<CR>
+
+" Function to restore session but override working directory
+function! RestoreSession()
+    if filereadable(expand('~/.vim/sessions/default.vim'))
+        source ~/.vim/sessions/default.vim
+        " Override the session's working directory with startup directory
+        execute 'cd ' . g:vim_startup_directory
+        " Update FZF to use the new working directory
+        let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+    endif
+endfunction
+
+" Map to your restore shortcut
+nnoremap <leader>L :call RestoreSession()<CR>
 
 " Function to close all buffers and do not overwrite the default session file
 function! CloseAllBuffersNoSession()
