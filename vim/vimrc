@@ -24,10 +24,7 @@ call plug#begin('~/.vim/plugged')
 " --- Color scheme
 Plug 'morhetz/gruvbox'
 
-" --- Airline
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
-
+" --- PYTHON ---
 " --- Python syntax highlights
 Plug 'sheerun/vim-polyglot'
 
@@ -36,12 +33,16 @@ Plug 'davidhalter/jedi-vim'
 " Disable jedi-vim's default shortcuts before call plug#end()
 let g:jedi#use_shortcuts = 0
 
+" --- SQL ---
 " --- SQL syntax highlights
 Plug 'lifepillar/pgsql.vim'
 let g:sql_type_default = 'pgsql'
 
 " --- SQL autocomplete
 Plug 'vim-scripts/SQLComplete.vim'
+
+" --- JavaScript ---
+Plug 'dense-analysis/ale'
 
 " --- Install supertab
 Plug 'ervandew/supertab'
