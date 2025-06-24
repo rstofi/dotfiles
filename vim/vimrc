@@ -24,14 +24,29 @@ call plug#begin('~/.vim/plugged')
 " --- Color scheme
 Plug 'morhetz/gruvbox'
 
-" --- PYTHON ---
-" --- Python syntax highlights
+" --- Syntax highlights
 Plug 'sheerun/vim-polyglot'
 
+" --- PYTHON ---
 " --- Python autocompletion and useful tools
 Plug 'davidhalter/jedi-vim'
 " Disable jedi-vim's default shortcuts before call plug#end()
+" let g:jedi#use_shortcuts = 0
+
+" Completely disable jedi-vim from creating any global mappings
+let g:jedi#auto_initialization = 0
+let g:jedi#auto_vim_configuration = 0
 let g:jedi#use_shortcuts = 0
+
+" Disable all default jedi mappings globally
+let g:jedi#goto_command = ""
+let g:jedi#goto_assignments_command = ""
+let g:jedi#goto_stubs_command = ""
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = ""
+let g:jedi#usages_command = ""
+let g:jedi#completions_command = ""
+let g:jedi#rename_command = ""
 
 " --- SQL ---
 " --- SQL syntax highlights
@@ -43,6 +58,7 @@ Plug 'vim-scripts/SQLComplete.vim'
 
 " --- JavaScript ---
 Plug 'dense-analysis/ale'
+"Plug 'othree/yajs.vim' " Yet Another Javascript Syntax
 
 " --- Install supertab
 Plug 'ervandew/supertab'
@@ -198,27 +214,214 @@ nnoremap <S-Tab> <<
 vnoremap <S-Tab> <gv
 inoremap <S-Tab> <C-o><<
 
+" ----------------------------------------------------------------------------
+" Set colorscheme
+set bg=dark
+colorscheme gruvbox
+
+" Enable Airline and set Gruvbox theme
+" let airline_theme='gruvbox'
+" let airline_powerline_fonts = 1
+
+" Highlight only misspelled words
+highlight SpellBad cterm=underline
+highlight SpellCap cterm=underline
+highlight SpellRare cterm=underline
+highlight SpellLocal cterm=underline
+
+" Syntax and numbering
+syntax on " Syntax highlight
+set number " Line numbers
+" set number relativenumber " Set relative line numbers
+
+" Load custom Base16 Atelier Lakeside Dark color scheme
+" colorscheme base16-atelier-lakeside-dark
+
+" Fonts gor the GUI
+set guifont=Monospace\ 10
+
+" Cursor highlights
+set cursorline " Highlight cursor line
+"set cursorcolumn " Highlight cursor column
+hi clear CursorLine " Unset cursorline formatting
+hi link CursorLine CursorColumn " Set formatting same as cursorcolumn
+
+" Set vertical line
+set colorcolumn=79
+
+" --- SUPERTAB CONFIGURATION ------------------------------------------------
+" Set global defaults
+let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabContextDefaultCompletionType = '<c-n>'
+
+" Configure SuperTab for specific filetypes that need special handling
+augroup SuperTabConfig
+  autocmd!
+  
+  " JavaScript: Use ALE omnifunc completion
+  " autocmd FileType javascript let b:SuperTabDefaultCompletionType = '<c-x><c-o>'
+  autocmd FileType javascript let b:SuperTabDefaultCompletionType = 'context'
+  
+  " Python: Use context (will work with Jedi)
+  autocmd FileType python let b:SuperTabDefaultCompletionType = 'context'
+  
+  " All other filetypes inherit the global 'context' setting
+  " This includes LaTeX, Markdown, HTML, CSS, etc.
+augroup END
+" ----------------------------------------------------------------------------
+
+" --- PYTHON -----------------------------------------------------------------
 " --- Configure jedi behaviour
 let g:jedi#popup_select_first = 0
 let jedi#show_call_signatures = 0
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_tabs = 1
 
-" Disable tabs as I only use buffers
-" set tabpagemax=0
-
-" Unmap default Shift-K from jedi-vim
+" Python-specific jedi initialization and unmapping
 augroup JediVim
   autocmd!
-  autocmd FileType python nunmap <buffer> K
-    autocmd FileType python nunmap <buffer> <leader>s
+  " Initialize jedi only for Python files
+  autocmd FileType python call jedi#configure_call_signatures()
+  " Unmap default Shift-K from jedi-vim (only in Python files)
+  autocmd FileType python silent! nunmap <buffer> K
+  autocmd FileType python silent! nunmap <buffer> <leader>s
+augroup END
+" ----------------------------------------------------------------------------
+
+" --- JAVASCRIPT -------------------------------------------------------------
+" --- ALE Configuration
+let g:ale_linters_explicit = 1
+
+" Set linters for JavaScript - fix the tsserver executable
+let g:ale_linters = {
+\   'javascript': ['tsserver'],
+\   'python': [],
+\}
+
+" Fix the tsserver executable path
+let g:ale_javascript_tsserver_executable = 'tsserver'
+let g:ale_javascript_tsserver_use_global = 1
+
+" Set fixers for JavaScript
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\}
+
+" Enable completion and LSP features
+let g:ale_completion_enabled = 1
+let g:ale_completion_autoimport = 1
+let g:ale_lsp_suggestions = 1
+let g:ale_disable_lsp = 0
+
+" ALE completion settings
+set completeopt=menu,menuone,preview,noselect,noinsert
+
+" Configure hover behavior
+let g:ale_hover_cursor = 0                    " Don't auto-hover on cursor
+let g:ale_hover_to_preview = 0                " Use preview window for hover
+let g:ale_hover_to_floating_preview = 1
+let g:ale_floating_preview = 1
+let g:ale_close_preview_on_insert = 1         " Close preview when entering insert mode
+
+" Configure references to show in location list
+let g:ale_set_loclist = 1                     " Enable location list
+let g:ale_open_list = 1                       " Auto-open location list
+let g:ale_list_window_size = 10               " Set list window height
+let g:ale_list_vertical = 0                   " Use horizontal split
+
+" Configure location list (error list) window behavior
+augroup LocationListMappings
+  autocmd!
+  " Add custom mappings when location list opens
+  autocmd FileType qf if getloclist(0, {'winid':1}).winid != 0 |
+    \ nnoremap <buffer> <silent> <leader>q :lclose<CR> |
+    \ nnoremap <buffer> <silent> q :lclose<CR> |
+    \ nnoremap <buffer> <silent> <ESC> :lclose<CR> |
+    \ nnoremap <buffer> <CR> <CR>:lclose<CR> |
+    \ endif
 augroup END
 
-" Remap Shift k to <leader>shift k
-nnoremap <silent> <leader>K :call jedi#show_documentation()<CR>
+" Configure error/warning list behavior
+let g:ale_set_loclist = 1                     " Enable location list
+let g:ale_open_list = 0                       " DON'T auto-open location list
+let g:ale_list_window_size = 10               " Set list window height when opened
+let g:ale_list_vertical = 0                   " Use horizontal split
 
-" Remap "Go to Definition" to <leader>d and free up <leader>g
-nnoremap <silent> <leader>d :call jedi#goto()<CR>
+" Keep signs in the gutter and cursor messages
+let g:ale_set_signs = 1                       " Keep warning/error signs
+let g:ale_echo_cursor = 1                     " Show message when cursor is on error
+
+" Configure ALE signs and highlights
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = '!'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_set_highlights = 1
+
+" syntax higlights
+let g:ale_set_highlights = 1
+
+" Enhanced JavaScript highlighting for Gruvbox
+augroup JavaScriptHighlighting
+  autocmd!
+  " Function names
+  autocmd FileType javascript highlight link jsFuncName GruvboxBlue
+  autocmd FileType javascript highlight link jsFunction GruvboxRed
+  autocmd FileType javascript highlight link jsFunctionKey GruvboxBlue
+  
+  " Variables and identifiers
+  autocmd FileType javascript highlight link jsVariableDef GruvboxFg1
+  autocmd FileType javascript highlight link jsGlobalObjects GruvboxOrange
+  autocmd FileType javascript highlight link jsGlobalNodeObjects GruvboxOrange
+  
+  " Keywords
+  autocmd FileType javascript highlight link jsStorageClass GruvboxPurple
+  autocmd FileType javascript highlight link jsOperatorKeyword GruvboxRed
+  autocmd FileType javascript highlight link jsThis GruvboxPurple
+  autocmd FileType javascript highlight link jsSuper GruvboxPurple
+  
+  " Strings and templates
+  autocmd FileType javascript highlight link jsTemplateString GruvboxAqua
+  autocmd FileType javascript highlight link jsTemplateBraces GruvboxAqua
+  
+  " Numbers and booleans
+  autocmd FileType javascript highlight link jsNumber GruvboxPurple
+  autocmd FileType javascript highlight link jsBoolean GruvboxPurple
+  autocmd FileType javascript highlight link jsNull GruvboxPurple
+  autocmd FileType javascript highlight link jsUndefined GruvboxPurple
+  
+  " Comments
+  autocmd FileType javascript highlight link jsComment GruvboxGray
+  autocmd FileType javascript highlight link jsLineComment GruvboxGray
+  autocmd FileType javascript highlight link jsDocComment GruvboxGray
+augroup END
+" ----------------------------------------------------------------------------
+
+" --- LANGUAGE-SPECIFIC KEYBINDINGS ------------------------------------------
+augroup FileTypeSpecificMappings
+  autocmd!
+  " --- Python-specific mappings
+  autocmd FileType python nnoremap <buffer> <silent> <leader>K :call jedi#show_documentation()<CR>
+  autocmd FileType python nnoremap <buffer> <silent> <leader>d :call jedi#goto()<CR>
+  
+  " --- JavaScript-specific mappings using ALE
+  autocmd FileType javascript nnoremap <buffer> <silent> <leader>d :ALEGoToDefinition<CR>
+  autocmd FileType javascript nnoremap <buffer> <silent> <leader>K :ALEHover<CR>
+  autocmd FileType javascript nnoremap <buffer> <silent> <leader>r :ALEFindReferences<CR>
+  autocmd FileType javascript nnoremap <buffer> <silent> <leader>R :ALERename<CR>
+  autocmd FileType javascript nnoremap <buffer> <silent> <leader>F :ALEFix<CR>
+
+  " Error/warning list management
+  autocmd FileType javascript nnoremap <buffer> <silent> <leader>e :lopen<CR>     " Open error list
+  autocmd FileType javascript nnoremap <buffer> <silent> <leader>E :lclose<CR>    " Close error list
+  autocmd FileType javascript nnoremap <buffer> <silent> <leader>en :lnext<CR>    " Next error
+  autocmd FileType javascript nnoremap <buffer> <silent> <leader>ep :lprevious<CR> " Previous error
+
+  " Close preview and location list
+  autocmd FileType javascript nnoremap <buffer> <silent> <leader>q :pclose<CR>:lclose<CR>
+
+
+augroup END
+" ----------------------------------------------------------------------------
 
 " --- fzf key bindings
 
@@ -246,7 +449,7 @@ function! s:GitGrepSearch()
   execute 'GitGrep ' . l:pattern
 endfunction
 
-" Map this to <leader>a
+" Map this to <leader>g
 autocmd FileType python silent! nunmap <buffer> <leader>g
 nnoremap <silent> <leader>g :call <SID>GitGrepSearch()<CR>
 
@@ -335,44 +538,6 @@ endfunction
 
 nnoremap <F7> :call ToggleFiletype()<CR>
 
-" Set colorscheme
-set bg=dark
-colorscheme gruvbox
-
-" Old color scheme - Adjusted to a built-in scheme that might feel closer to GitHub/Sublime
-" See the plugs for the color schema I am using
-" colorscheme sublimemonokai
-
-" Enable Airline and set Gruvbox theme
-" let airline_theme='gruvbox'
-" let airline_powerline_fonts = 1
-
-" Highlight only misspelled words
-highlight SpellBad cterm=underline
-highlight SpellCap cterm=underline
-highlight SpellRare cterm=underline
-highlight SpellLocal cterm=underline
-
-" Syntax and numbering
-syntax on " Syntax highlight
-set number " Line numbers
-" set number relativenumber " Set relative line numbers
-
-" Load custom Base16 Atelier Lakeside Dark color scheme
-" colorscheme base16-atelier-lakeside-dark
-
-" Fonts gor the GUI
-set guifont=Monospace\ 10
-
-" Cursor highlights
-set cursorline " Highlight cursor line
-"set cursorcolumn " Highlight cursor column
-hi clear CursorLine " Unset cursorline formatting
-hi link CursorLine CursorColumn " Set formatting same as cursorcolumn
-
-" Set vertical line
-set colorcolumn=79
-
 " STATUS LINE ------------------------------------------------------------ {{{
 " Clear status line when vimrc is reloaded.
 set statusline=
@@ -434,7 +599,5 @@ set textwidth=0
 
 " Remove automatic text wrapping
 set formatoptions-=t
-
-
 
 
