@@ -1,4 +1,4 @@
-" .vimrc  by Kristof Rozgonyi @2024
+" .vimrc  by Kristof Rozgonyi @2025
 
 " Automatic installation of vim-plug
 let data_dir = has('nvim') ? stdpath('data') . '/site' : expand('~/.vim')
@@ -46,7 +46,7 @@ let g:jedi#goto_definitions_command = ""
 let g:jedi#documentation_command = ""
 let g:jedi#usages_command = ""
 let g:jedi#completions_command = ""
-let g:jedi#rename_command = ""
+let g:jedi#rename_command = "" 
 
 " --- SQL ---
 " --- SQL syntax highlights
@@ -65,10 +65,24 @@ Plug 'ervandew/supertab'
 
 " --- Code block indentation
 Plug 'nathanaelkane/vim-indent-guides'
-" enabling by default and configuration
-let indent_guides_enable_on_vim_startup = 1
-let indent_guides_start_level = 2
-let indent_guides_guide_size = 1
+" Global defaults for indent guides (4-space files)
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+
+" File-type specific indent guide configuration
+augroup IndentGuidesConfig
+  autocmd!
+  " For 2-space files: start at level 1, size 1
+  autocmd FileType javascript,typescript,json,yaml,html,css,markdown 
+    \ let b:indent_guides_start_level = 1 |
+    \ let b:indent_guides_guide_size = 1
+  
+  " For files opened by extension (fallback)
+  autocmd BufNewFile,BufRead *.js,*.ts,*.json,*.yaml,*.html,*.css,*.md
+    \ let b:indent_guides_start_level = 1 |
+    \ let b:indent_guides_guide_size = 1
+augroup END
 
 " --- Add the vim-gitgutter plugin
 Plug 'airblade/vim-gitgutter'
@@ -80,10 +94,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" --- Add language server support
-" coc.nvim for LSP support
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 " MARKDOWN preview support
 " If you don't have nodejs and yarn
 " use pre build, add 'vim-plug' to the filetype list so vim-plug can update this plugin
@@ -92,6 +102,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 
 " Create tags for files on-the-fly for easier navigation
 Plug 'majutsushi/tagbar'
+
+" File explorer
+Plug 'preservim/nerdtree'
 
 " End the plugin section
 call plug#end()
@@ -223,12 +236,6 @@ colorscheme gruvbox
 " let airline_theme='gruvbox'
 " let airline_powerline_fonts = 1
 
-" Highlight only misspelled words
-highlight SpellBad cterm=underline
-highlight SpellCap cterm=underline
-highlight SpellRare cterm=underline
-highlight SpellLocal cterm=underline
-
 " Syntax and numbering
 syntax on " Syntax highlight
 set number " Line numbers
@@ -299,7 +306,8 @@ let g:ale_linters = {
 \}
 
 " Fix the tsserver executable path
-let g:ale_javascript_tsserver_executable = 'tsserver'
+" let g:ale_javascript_tsserver_executable = 'tsserver'
+let g:ale_javascript_tsserver_executable = system('which tsserver 2>/dev/null | tr -d "\n"')
 let g:ale_javascript_tsserver_use_global = 1
 
 " Set fixers for JavaScript
@@ -323,17 +331,11 @@ let g:ale_hover_to_floating_preview = 1
 let g:ale_floating_preview = 1
 let g:ale_close_preview_on_insert = 1         " Close preview when entering insert mode
 
-" Configure references to show in location list
-let g:ale_set_loclist = 1                     " Enable location list
-let g:ale_open_list = 1                       " Auto-open location list
-let g:ale_list_window_size = 10               " Set list window height
-let g:ale_list_vertical = 0                   " Use horizontal split
-
 " Configure location list (error list) window behavior
 augroup LocationListMappings
   autocmd!
-  " Add custom mappings when location list opens
-  autocmd FileType qf if getloclist(0, {'winid':1}).winid != 0 |
+  " Only apply to actual quickfix/location list windows, not NERDTree
+  autocmd BufWinEnter * if &buftype == 'quickfix' && getloclist(0, {'winid':1}).winid != 0 |
     \ nnoremap <buffer> <silent> <leader>q :lclose<CR> |
     \ nnoremap <buffer> <silent> q :lclose<CR> |
     \ nnoremap <buffer> <silent> <ESC> :lclose<CR> |
@@ -421,6 +423,49 @@ augroup FileTypeSpecificMappings
 
 
 augroup END
+" ----------------------------------------------------------------------------
+
+" --- NERDTREE CONFIGURATION -------------------------------------------------
+" Don't open NERDTree automatically
+let g:NERDTreeAutoOpen = 0
+
+" Basic settings
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeDirArrows = 1
+let g:NERDTreeAutoDeleteBuffer = 1
+let g:NERDTreeQuitOnOpen = 1 " Quit nerdtree when opening a new file
+let g:NERDTreeWinSize = 35
+
+"Auto-refresh settings
+let g:NERDTreeAutoRefresh = 1         " Auto refresh when focus returns
+let g:NERDTreeCascadeOpenSingleChildDir = 1
+
+" Function to always open NERDTree at home directory
+function! ToggleNERDTreeAtHome()
+  if exists('g:NERDTree') && g:NERDTree.IsOpen()
+    NERDTreeClose
+  else
+    execute 'NERDTree ' . $HOME
+  endif
+endfunction
+
+" Ignore files
+let g:NERDTreeIgnore = [
+\   '\.pyc$', '\.pyo$', '\.rbc$', '\.rbo$', '\.class$', '\.o$', '\~$',
+\   '\.git$', '\.hg$', '\.svn$', '\.bzr$',
+\   'node_modules$', '\.DS_Store$'
+\]
+
+" Auto-close vim if NERDTree is the only window
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" REMOVE THE PROBLEMATIC AUTOCMD - this was causing the E788 error:
+" autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
+
+" Key mappings
+nnoremap <silent> <leader>T :call ToggleNERDTreeAtHome()<CR>
+nnoremap <silent> <leader>O :NERDTreeFind<CR>    " Find current file in NERDTree
 " ----------------------------------------------------------------------------
 
 " --- fzf key bindings
@@ -538,6 +583,12 @@ endfunction
 
 nnoremap <F7> :call ToggleFiletype()<CR>
 
+" Highlight only misspelled words
+highlight SpellBad cterm=underline
+highlight SpellCap cterm=underline
+highlight SpellRare cterm=underline
+highlight SpellLocal cterm=underline
+ 
 " STATUS LINE ------------------------------------------------------------ {{{
 " Clear status line when vimrc is reloaded.
 set statusline=
@@ -560,11 +611,23 @@ set laststatus=2
 
 " }}}
 
-" Tab behaviour
+" --- INDENTATION CONFIGURATION (Updated) ------------------------------------
+" Global default: 4 spaces (keep your existing settings as defaults)
 set tabstop=4       " number of visual spaces per TAB
 set softtabstop=4   " number of spaces in tab when editing
 set shiftwidth=4    " number of spaces to use for autoindent
 set expandtab       " expand tab to spaces so that tabs are spaces
+
+" File-type specific indentation: 2 spaces for web technologies
+augroup FileTypeIndentation
+  autocmd!
+  " 2 spaces for web/config file types
+  autocmd FileType javascript,typescript,json,yaml,html,markdown setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  
+  " You can also match by file extension if needed (alternative approach)
+  autocmd BufNewFile,BufRead *.js,*.ts,*.json,*.yaml,*.html,*.css,*.md setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+" ----------------------------------------------------------------------------
 
 " History
 set history=200
