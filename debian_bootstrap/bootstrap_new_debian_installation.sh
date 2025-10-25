@@ -2,14 +2,14 @@
 
 # ---
 # Bootstrap script for installing packages and configuring
-# most of the environment on *Ubuntu* after a minimal installation.
+# most of the environment on *Debian* after a minimal installation.
 # This is a bash script, so run this via:
-# `./bootstrap_new_ubuntu_installation.sh`
+# `./bootstrap_new_debian_installation.sh`
 #
-# Tested on Ubuntu 24.04
+# Tested on Debian 13.01
 #
 # Author: Kristof Rozgonyi (rstofi@gmail.com)
-# MIT license @2024
+# MIT license @2025
 # ---
 
 # --- Function to print help message
@@ -73,36 +73,6 @@ elif $dry_run; then
     echo "Dry-run mode: New document option creation skipped."
 fi
 
-# --- List of PPAs (Personal Package Archives) to add
-ppas=(
-    #"ppa:numix/ppa" # This have some issues
-    "ppa:longsleep/golang-backports"
-    # Add more PPAs as needed
-)
-
-# --- Echo PPAs to be added
-if $dry_run; then
-    echo "Dry-run mode: List of PPAs to be added:"
-elif $run; then
-    echo "Addoinf PPAs:"
-fi
-
-# --- Add PPAs or display them in dry-run mode
-for ppa in "${ppas[@]}"; do
-    if $dry_run; then
-        echo "  - PPA: $ppa"
-    elif $run; then
-        sudo add-apt-repository -y "$ppa"
-    fi
-done
-
-# --- Update the package list after adding PPAs
-if $dry_run; then
-    echo "Dry-run mode: Skipping apt update after adding PPAs."
-elif $run; then
-    sudo apt update
-fi
-
 # --- List of packages to install
 packages=(
     git # My version control tool of choice
@@ -110,19 +80,18 @@ packages=(
     tmux # Terminal multiplexer
     vim-gtk3 # For clipboard support
     xclip # For tmux mouse support
-    #golang-go # GO rograming language (from PPA) # Something is broken, disabling for now
     #fzf # Fuzzy finder # I install it from source to enable terminal integration (see later in the code)
     ripgrep # speed up for fzf and for using in vim (Tag support and navigation added to my vimrc)
     wget # Downloading from terminal
     curl # HTTP requests
-    ubuntu-restricted-extras # Additional codecs support 
     gnome-tweaks # Customizing gnome
     thunderbird # My choice of email client (not coming with the minimalist Ubuntu install)
+    firefox # My choice of browser
     vlc # For multimedia support
     transmission # Torrent tool
     libreoffice # Missing from minimalist install
-    lf # Command-line file manager
-    tldr # man/help alternative
+    #lf # Command-line file manager --> need manual installation
+    #tldr # man/help alternative --> need manual installation
     gdu # CLI tool for disk usage analysis
     neofetch # Displaying ASCII Linux logo in terminal
     dconf-cli # Required to run Gogh (installing gruvbox color scheme)
@@ -131,7 +100,7 @@ packages=(
     ca-certificates # For Docker
     htop # For a better top experience
     universal-ctags # For tagging code blocks in vim
-    libfuse2t64 # To enable installing AppImages
+    libfuse2 # To enable installing AppImages
     #lazygit # TUI for git operations (Four Ubuntu 25.04 + only!)
     xauth # For WSL
     dbus-x11 # For WSL
@@ -170,7 +139,6 @@ install_third_party_packages() {
     ["fzf"]="git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf; ~/.fzf/install --all; grep -qxF \"[ -f ~/.fzf.bash ] && source ~/.fzf.bash\" ~/.bashrc || echo \"[ -f ~/.fzf.bash ] && source ~/.fzf.bash\" >> ~/.bashrc"
     # Add more third-party packages as needed
     # ["package-name"]="command to install package"
-    ["zen"]="bash <(curl https://updates.zen-browser.app/appimage.sh)" # Browser of choice
     )
 
     echo "Installing third-pary packages from source:"
@@ -188,21 +156,6 @@ install_third_party_packages() {
 # Call the function in the script
 install_third_party_packages
 
-# --- Check if all PPAs are added and packages are installed
-echo "Checking if all PPAs and packages are installed successfully ..."
-
-# --- Check PPAs
-echo "PPAs status:"
-missing_ppas=()
-for ppa in "${ppas[@]}"; do
-    ppa_name=$(echo "$ppa" | cut -d':' -f2)
-    if grep -rq "$ppa_name" /etc/apt/sources.list.d/; then
-        echo "  - [PPA][installed] $ppa"
-    else
-        echo "  - [PPA][missing]: $ppa"
-        missing_ppas+=("$ppa")
-    fi
-done
 # --- Check Packages
 echo "Packages status:"
 missing_packages=()
@@ -217,15 +170,6 @@ for package in "${packages[@]}"; do
 done
 
 # --- Summary of the checks
-# PPAs
-if [[ ${#missing_ppas[@]} -eq 0 ]]; then
-    echo "No missing PPAs."
-else
-    echo "Missing PPAs:"
-    for ppa in "${missing_ppas[@]}"; do
-        echo "  $ppa"
-    done
-fi
 # Packages
 if [[ ${#missing_packages[@]} -eq 0 ]]; then
     echo "No missing Packages."
