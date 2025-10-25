@@ -73,6 +73,15 @@ elif $dry_run; then
     echo "Dry-run mode: New document option creation skipped."
 fi
 
+# --- Setup NodeSource repository for Node.js
+if $run; then
+    echo "Setting up NodeSource repository for Node.js LTS..."
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+    echo "NodeSource repository added."
+elif $dry_run; then
+    echo "Dry-run mode: NodeSource repository setup skipped."
+fi
+
 # --- List of packages to install
 packages=(
     git # My version control tool of choice
@@ -84,8 +93,9 @@ packages=(
     ripgrep # speed up for fzf and for using in vim (Tag support and navigation added to my vimrc)
     wget # Downloading from terminal
     curl # HTTP requests
+    nodejs # Node.js JavaScript runtime (via NodeSource, includes npm)
     gnome-tweaks # Customizing gnome
-    thunderbird # My choice of email client (not coming with the minimalist Ubuntu install)
+    thunderbird # My choice of email client (not coming with the minimalist Debian install)
     firefox # My choice of browser
     vlc # For multimedia support
     transmission # Torrent tool
@@ -101,7 +111,7 @@ packages=(
     htop # For a better top experience
     universal-ctags # For tagging code blocks in vim
     libfuse2 # To enable installing AppImages
-    #lazygit # TUI for git operations (Four Ubuntu 25.04 + only!)
+    #lazygit # TUI for git operations (For Debian 13.01+ only!)
     xauth # For WSL
     dbus-x11 # For WSL
     gnome-shell # For WSL to replace the default 256 term terminal
@@ -155,6 +165,45 @@ install_third_party_packages() {
 
 # Call the function in the script
 install_third_party_packages
+
+# --- Configure Node.js and install global npm packages
+if command -v node &> /dev/null; then
+    echo "Configuring Node.js environment..."
+
+    # Enable corepack for Yarn support
+    if $run; then
+        echo "  Enabling corepack for Yarn support..."
+        sudo corepack enable
+        echo "  Corepack enabled."
+    elif $dry_run; then
+        echo "  Dry-run mode: Would enable corepack for Yarn support."
+    fi
+
+    # List of global npm packages to install
+    npm_global_packages=(
+        @anthropic-ai/claude-code # Claude Code CLI
+        # Add more global npm packages as needed
+    )
+
+    # Echo what will be installed
+    if $dry_run; then
+        echo "  Dry-run mode: List of global npm packages to be installed:"
+    elif $run; then
+        echo "  Installing global npm packages:"
+    fi
+
+    # Install each npm package globally or display in dry-run mode
+    for npm_package in "${npm_global_packages[@]}"; do
+        if $dry_run; then
+            echo "    - npm package: $npm_package"
+        elif $run; then
+            echo "    - Installing $npm_package..."
+            npm install -g "$npm_package"
+        fi
+    done
+else
+    echo "Node.js not found. Skipping Node.js configuration."
+fi
 
 # --- Check Packages
 echo "Packages status:"

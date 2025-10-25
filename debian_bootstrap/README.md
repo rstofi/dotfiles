@@ -1,14 +1,14 @@
-## bootstrapping Ubuntu after a minimal installation
+## bootstrapping Debian after a minimal installation
 
 In this folder, I try to collect all the steps needed to set up my working environment, and I provide a bootsrapping script to automatically install all the necessary packages. Detailed instructions are provided in this README file.
 
 #### Run bootstrapping script
 
-Download the `bootstrap_new_ubuntu_installation.sh` from this git repo by hand and make it executable via `chmod +x bootstrap_new_ubuntu_installation.sh`.
+Download the `bootstrap_new_debian_installation.sh` from this git repo by hand and make it executable via `chmod +x bootstrap_new_debian_installation.sh`.
 
 Run the script first with the `--dry-run` switch to see, which packages will be installed.
 
-To actually install all the packages, run the cript again, with the `--run` flag.
+To actually install all the packages, run the script again, with the `--run` flag.
 
 #### Configure [Github](https://github.com/) access
 
@@ -18,7 +18,7 @@ Follow [these instructions](https://docs.github.com/en/authentication/connecting
 
 `git clone` this repo to local.
 
-Delete the `bootstrap_new_ubuntu_installation.sh` script downloaded before.
+Delete the `bootstrap_new_debian_installation.sh` script downloaded before.
 
 Run the `scripts/setup_dotfiles_symlink.sh` script to create symlinks for `vim` and `tmux` configuration scripts. You also need to make it executable via `chmod +x`.
 
