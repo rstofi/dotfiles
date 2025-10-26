@@ -96,22 +96,21 @@ packages=(
     nodejs # Node.js JavaScript runtime (via NodeSource, includes npm)
     gnome-tweaks # Customizing gnome
     thunderbird # My choice of email client (not coming with the minimalist Debian install)
-    firefox # My choice of browser
+    #firefox # My choice of browser --> Installed by default for Debian
     vlc # For multimedia support
     transmission # Torrent tool
     libreoffice # Missing from minimalist install
     #lf # Command-line file manager --> need manual installation
     #tldr # man/help alternative --> need manual installation
     gdu # CLI tool for disk usage analysis
-    neofetch # Displaying ASCII Linux logo in terminal
     dconf-cli # Required to run Gogh (installing gruvbox color scheme)
     uuid-runtime # Required to run Gogh (installing gruvbox color scheme)
     texlive-full # LaTeX all packages
     ca-certificates # For Docker
     htop # For a better top experience
     universal-ctags # For tagging code blocks in vim
-    libfuse2 # To enable installing AppImages
-    #lazygit # TUI for git operations (For Debian 13.01+ only!)
+    libfuse2t64 # To enable installing AppImages
+    lazygit # TUI for git operations (For Debian 13.01+ only)
     xauth # For WSL
     dbus-x11 # For WSL
     gnome-shell # For WSL to replace the default 256 term terminal

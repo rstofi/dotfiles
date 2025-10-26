@@ -13,6 +13,10 @@ alias latex_compiler="$HOME/dotfiles/scripts/latex_compiler.sh"
 alias lg='lazygit'
 # Alias for init_tmux script
 alias init_tmux="$HOME/dotfiles/scripts/init_general_tmux_session.sh"
+# Alias for quick directory listing
+alias ll="ls -l"
+# Alias for quickly update my system --> run with sudo!
+alias update="sudo apt update; sudo apt upgrade; sudo apt dist-upgrade"
 
 # --- Overwrite the bash shell prompt by adding []:
 OLD_PS1=$PS1

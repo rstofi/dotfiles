@@ -14,6 +14,13 @@ To actually install all the packages, run the script again, with the `--run` fla
 
 Follow [these instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) to configure access to GitHub via adding a new ssh key.
 
+Set up the git profile locally
+
+```
+git config --global user.name "Your Name"
+ git config --global user.email your@email
+```
+
 #### Download and configure the [dotfiles](https://github.com/rstofi/dotfiles) repo
 
 `git clone` this repo to local.
