@@ -169,17 +169,24 @@ install_third_party_packages
 if command -v node &> /dev/null; then
     echo "Configuring Node.js environment..."
 
-    # Enable corepack for Yarn support
+    # Configure npm to use user's home directory for global packages
     if $run; then
-        echo "  Enabling corepack for Yarn support..."
-        sudo corepack enable
-        echo "  Corepack enabled."
-    elif $dry_run; then
-        echo "  Dry-run mode: Would enable corepack for Yarn support."
+        echo "  Configuring npm to use user directory for global packages..."
+        mkdir -p ~/.npm-global
+        npm config set prefix '~/.npm-global'
+            
+        # Add to PATH if not already there
+        if ! grep -q "npm-global/bin" ~/.bashrc; then
+            echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
+        fi
+        export PATH=~/.npm-global/bin:$PATH
+        echo "  npm configured for user installation."
     fi
 
     # List of global npm packages to install
+    # NOTE: use npm for global packages and yarn for project specific packages and environments
     npm_global_packages=(
+        yarn  # Yarn package manager
         @anthropic-ai/claude-code # Claude Code CLI
         # Add more global npm packages as needed
     )
