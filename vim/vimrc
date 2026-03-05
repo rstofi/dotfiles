@@ -669,6 +669,30 @@ augroup FileTypeIndentation
   " You can also match by file extension if needed (alternative approach)
   autocmd BufNewFile,BufRead *.js,*.ts,*.json,*.yaml,*.html,*.css,*.md setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
+
+" Disable automatic line breaking
+set textwidth=0
+"
+" Remove automatic text wrapping and comment continuation
+set formatoptions-=t
+
+" --- PASTE CONFIGURATION ----------------------------------------------------
+set pastetoggle=<F2>
+
+augroup FormatOptions
+      autocmd!
+        autocmd FileType * setlocal formatoptions-=r formatoptions-=o
+augroup END
+
+" Automatically toggle paste mode around Ctrl+V in insert mode.
+" Uses a temporary register @p to hold clipboard content.
+if system('uname -r') =~ "microsoft"
+  " WSL: read clipboard via win32yank into temp register @p
+  inoremap <C-v> <C-o>:set paste<CR><C-o>:let @p=system('win32yank.exe -o --lf')<CR><C-r>p<C-o>:set nopaste<CR>
+else
+  " Non-WSL: read directly from system clipboard register +
+  inoremap <C-v> <C-o>:set paste<CR><C-r>+<C-o>:set nopaste<CR>
+endif
 " ----------------------------------------------------------------------------
 
 " History
@@ -698,11 +722,5 @@ set scrolloff=3
 " set wrap
 " Set maximum width for wrap
 " set textwidth=90
-
-" Disable automatic line breaking
-set textwidth=0
-
-" Remove automatic text wrapping
-set formatoptions-=t
 
 
